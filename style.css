@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css?family=Lobster');
+
+body { 
+  background-color: grey
+  /* background-image: url('teste.jpg');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center; 
+  background-size:  100% */
+}
+
+#tape-div {
+  display: flex;
+  margin: 5vh 0 5vh 0
+}
+
+
+#form-alphabet {
+  margin-bottom: 5vh
+}
+
+#form-tape {
+  margin-bottom: 5vh
+}
+
+#turing {
+ font-family: 'Lobster', cursive;
+ font-size: 60px;
+}

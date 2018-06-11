@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+  <title>Turing Machine</title>
+</head>
+
+<body>
+  <div class="container">
+    <div class="text-center">
+      <h1 id="turing" class="display-1"> Turing Machine</h1>
+    </div>
+    <div class="row" id="tape-div">
+      <div class="col-sm-12">
+        <table class="table table-bordered">
+
+          <tr id="tape-cell">
+
+          </tr>
+        </table>
+
+
+        <div class="row">
+          <div class="col-md-12">
+            <form id="form-tape">
+              <div class="input-group">
+                <input type="text" placeholder="1,1,1,_,1,1" id="tape" class="form-control" required disabled>
+                <span class="input-group-btn">
+                  <input onclick="tapeElements()" type="button" value="Enviar" class="btn btn-primary">
+                </span>
+              </div>
+              <small class="form-text text-muted">Somente válidos caracteres do alfabeto.</small>
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <!-- fim da row da fita -->
+
+    <!-- row do alfabeto -->
+    <label>Alfabeto</label>
+    <div class="row">     
+      <div class="col-sm-4">
+        <div class="input-group">
+          <select class="custom-select" id="alphabet" required>
+            <option value="1">a-zA-Z0-9</option>
+            <option value="2">0-9</option>
+          </select>
+          <div class="input-group-append">
+            <button onclick="setAlphabet()" class="btn btn-primary" type="button">Enviar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- fim row do alfabeto -->
+
+
+    <!-- comeco da row dos estados -->
+
+
+    <div class="row">
+      <div class="col-sm-4" >
+          <div style="margin: 10px 0 0 0">
+            <label>Estados</label>
+            <textarea id="estados" class="form-control rounded-0" rows="10" required minlength="11" disabled ></textarea>
+            <small class="form-text text-muted">Estados. Exemplo: q1 -> 1,a,D</small>
+            <div>
+                <input onclick="Validate()" id="btn-state" type="button" value="Enviar" class="btn btn-primary">
+            </div>
+          </div>
+      </div>
+
+    </div>
+  </div>
+  <script src='https://ajaxorg.github.io/ace-builds/src-min-noconflict/ace.js'></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="script.js"></script>
+
+</body>
+
+
+</html>
