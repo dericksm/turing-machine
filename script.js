@@ -1,62 +1,37 @@
-const pattern1 = /((^q[a-zA-Z0-9]) -> ([a-zA-Z0-9]+),([a-zA-Z0-9]+),[ED])+/;
-const pattern2 = /((^q[0-9]) -> ([0-9]+),([0-9]+),[ED])+/;
-
+const pattern = /((^q[a-zA-Z0-9_],[a-zA-Z0-9_]) -> (q[a-zA-Z0-9_]),([a-zA-Z0-9$]),[ED])+/;
 function Validate() {
 
-  if ($("#btn-state").val() == "Enviar") {
-    var error = false
-    var pattern = $("#alphabet").val();
-    var states = $("#estados").val();
-    if (pattern == '1') {
-      pattern = pattern1
-    } else {
-      pattern = pattern2
-    }
-
-    var statesArray = states.split('\n');
-
-    for (var i = 0; i < statesArray.length; i++) {
-      if (!statesArray[i].match(pattern)) {
-        alert('Use some os caracteres válidos pelo alfabeto e respeite o padrão: q1 -> a,d,E');
-        error = true;
-      }
-    }
-    if (error == false) {
-      $("#estados").val(states)
-      $("#btn-state").val("Editar")
-      $("#estados").prop('disabled', true)
-      $("#btn-state").prop('class', 'btn btn-danger')
-      toTuring(statesArray)
-    }
-
-  } else {
+  var error = false
+  var states = $("#estados").val();
 
 
-    var error = false
-    var pattern = $("#alphabet").val()
-    var states = $("#estados").val()
-    if (pattern == '1') {
-      pattern = pattern1
-    } else {
-      pattern = pattern2
-    }
+  var statesArray = states.split('\n');
 
-    var lines = states.split('\n');
-
-    for (var i = 0; i < lines.length; i++) {
-      if (!lines[i].match(pattern)) {
-        alert('Use some os caracteres válidos pelo alfabeto e respeite o padrão: q1 -> a,d,E')
-        error = true
-      }
-    }
-    if (error == false) {
-      $("#estados").val(states)
-      $("#btn-state").val("Enviar")
-      $("#estados").prop('disabled', false)
-      $("#btn-state").prop('class', 'btn btn-primary')
-      toTuring(states)
+  for (var i = 0; i < statesArray.length; i++) {
+    if (!statesArray[i].match(pattern)) {
+      alert('Use some os caracteres válidos pelo alfabeto e respeite o padrão: q1,_ -> qa,d,E');
+      error = true;
+      return
     }
   }
+  if (error == false) {
+    toTuring(statesArray)
+
+    // if ($("#btn-state").val() == "Enviar") {
+    //   $("#estados").val(states)
+    //   $("#btn-state").val("Editar")
+    //   $("#estados").prop('disabled', true)
+    //   $("#btn-state").prop('class', 'btn btn-danger')
+    //   toTuring(statesArray)
+    // } else {
+    //   $("#estados").val(states)
+    //   $("#btn-state").val("Enviar")
+    //   $("#estados").prop('disabled', false)
+    //   $("#btn-state").prop('class', 'btn btn-danger')
+    //   toTuring(statesArray)
+    // }
+  }
+
 
 }
 
@@ -81,29 +56,43 @@ function tapeElements() {
 
 }
 
-function setAlphabet() {
-  var value = $("#alphabet").val();
+function valdidation(actions, states) {
+  var index = 0
+  let verify = function (element) {
+    index++
+    return states.includes(element, index)
+  }
+  //verifica se tem igual
+    if (states.some(element => verify(element))) {
+    alert('Existem estados repetidos!')
+    return false
+  } else if (!actions.find(element => element.state == 'q_')) {
+    alert('Você deve informar o estado inicial')
+    return false
+  } else if (!actions.find(element => element.write == '$')) {
+    alert('Você deve informar pelo menos um  estado final')
+    return false
+  } else 
+  return true
 
-  $("#alphabet").prop('disabled', true);
-  $("#estados").prop('disabled', false);
+
 }
 
 function toTuring(states) {
-  var state = []
-  //aqui é Js até no talo
-  if(states.some(element => states.includes(element, element))){
-    alert('Existem estados repetidos!')
-    return
-  } else {
+  var actions = []
+ 
     states.forEach(element => {
-      state.push({
+      actions.push({
         state: element.slice(0, 2),
-        tape: element.slice(6, 7),
-        write: element.slice(8, 9),
-        goTo: element.slice(10, 11)
+        read: element.slice(3, 4),
+        nextState: element.slice(8, 10),
+        write: element.slice(11, 12),
+        move: element.slice(13, 14)
       })
     });
+    console.log(actions)
+    valdidation(actions, states)
 
-  }
- 
+  
+
 }

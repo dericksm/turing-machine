@@ -29,14 +29,13 @@
 
         <div class="row">
           <div class="col-md-12">
-            <form id="form-tape">
-              <div class="input-group">
-                <input type="text" placeholder="1,1,1,_,1,1" id="tape" class="form-control" required disabled>
+            <form onsubmit="tapeElements(); return false " id="form-tape" data-toggle="validator">
+                <div class="input-group has-feedback">
+                <input type="text" id="tape" class="form-control" required pattern="^[a-zA-Z0-9 ](,[a-zA-Z0-9 ])*$">
                 <span class="input-group-btn">
-                  <input onclick="tapeElements()" type="button" value="Enviar" class="btn btn-primary">
+                  <input type="submit" value="Enviar" class="btn btn-primary">
                 </span>
               </div>
-              <small class="form-text text-muted">Somente válidos caracteres do alfabeto.</small>
             </form>
           </div>
 
@@ -47,15 +46,14 @@
 
     <!-- row do alfabeto -->
     <label>Alfabeto</label>
-    <div class="row">     
+    <div class="row">
       <div class="col-sm-4">
         <div class="input-group">
-          <select class="custom-select" id="alphabet" required>
+          <select class="custom-select" id="alphabet" required disabled>
             <option value="1">a-zA-Z0-9</option>
-            <option value="2">0-9</option>
           </select>
           <div class="input-group-append">
-            <button onclick="setAlphabet()" class="btn btn-primary" type="button">Enviar</button>
+            <button class="btn btn-primary" type="button">Enviar</button>
           </div>
         </div>
       </div>
@@ -67,21 +65,22 @@
 
 
     <div class="row">
-      <div class="col-sm-4" >
-          <div style="margin: 10px 0 0 0">
-            <label>Estados</label>
-            <textarea id="estados" class="form-control rounded-0" rows="10" required minlength="11" disabled ></textarea>
-            <small class="form-text text-muted">Estados. Exemplo: q1 -> 1,a,D</small>
-            <div>
-                <input onclick="Validate()" id="btn-state" type="button" value="Enviar" class="btn btn-primary">
-            </div>
+      <div class="col-sm-4">
+        <div style="margin: 10px 0 0 0">
+          <label>Estados</label>
+          <textarea id="estados" class="form-control rounded-0" rows="10" required></textarea>
+          <small class="form-text text-muted">Estados. Exemplo: q1 -> 1,a,D</small>
+          <div>
+            <input onclick="Validate()" id="btn-state" type="button" value="Enviar" class="btn btn-primary">
           </div>
+        </div>
       </div>
 
     </div>
   </div>
   <script src='https://ajaxorg.github.io/ace-builds/src-min-noconflict/ace.js'></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
   <script src="script.js"></script>
 
 </body>
