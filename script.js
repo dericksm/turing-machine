@@ -5,15 +5,27 @@ function validate() {
 
   var statesArray = states.split('\n');
 
-  for (var i = 0; i < statesArray.length; i++) {
-    if (!statesArray[i].match(pattern)) {
-      alert('Use some os caracteres válidos pelo alfabeto e respeite o padrão: q1,_ -> qa,d,>');
-      error = true;
-      return
-    }
-  }
-  if (error == false) {
+  // for (var i = 0; i < statesArray.length; i++) {
+  //   if (!statesArray[i].match(pattern)) {
+  //     error = true;
+  //     return
+  //   }
+  
+  if (statesArray.forEach(element => element.match(pattern))) {
     toTuring(statesArray)
+    $("#message").addClass("alert alert-success")
+    $("#message").html("<strong>Perfeito!</strong> Enviado com sucesso")
+    $('#message').fadeIn('slow', function () {
+      $('#message').delay(1000).fadeOut();
+    })
+  } else {
+
+    $("#message").addClass("alert alert-danger")
+    $("#message").html("<strong>Olha aqui ó!</strong> Respeita esse regex")
+    $('#message').fadeIn('slow', function () {
+      $('#message').delay(1000).fadeOut();
+    })
+
   }
 }
 
