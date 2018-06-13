@@ -1,29 +1,18 @@
-const pattern = /((^q[a-zA-Z0-9_],[a-zA-Z0-9_]) -> (q[a-zA-Z0-9_]),([a-zA-Z0-9]),[\<\>$])+/;
+const pattern = /((^q[a-zA-Z0-9_],[a-zA-Z0-9_]) -> (q[a-zA-Z0-9_]),([a-zA-Z0-9]),[\<\>$])+/gm;
 function validate() {
   var error = false
   var states = $("#estados").val();
 
   var statesArray = states.split('\n');
 
-  // for (var i = 0; i < statesArray.length; i++) {
-  //   if (!statesArray[i].match(pattern)) {
-  //     error = true;
-  //     return
-  //   }
-  
-  if (statesArray.forEach(element => element.match(pattern))) {
-    toTuring(statesArray)
-    $("#message").addClass("alert alert-success")
-    $("#message").html("<strong>Perfeito!</strong> Enviado com sucesso")
-    $('#message').fadeIn('slow', function () {
-      $('#message').delay(1000).fadeOut();
+  if (states.match(pattern) && validation(statesArray)) {
+    $('#message-success').fadeIn('slow', function () {
+      $('#message-success').delay(1000).fadeOut();
     })
+    toTuring(statesArray)
   } else {
-
-    $("#message").addClass("alert alert-danger")
-    $("#message").html("<strong>Olha aqui ó!</strong> Respeita esse regex")
-    $('#message').fadeIn('slow', function () {
-      $('#message').delay(1000).fadeOut();
+    $('#message-error').fadeIn('slow', function () {
+      $('#message-error').delay(1000).fadeOut();
     })
 
   }
@@ -60,13 +49,15 @@ q2,1 -> q2,1,$`)
   tapeElements()
 }
 
-function validation(actions, states) {
+function validation(states) {
   var index = 0
   let verify = function (element) {
     index++
     return states.includes(element, index)
   }
-  //verifica se tem igual
+
+  var actions = toTuring(states)
+
   if (states.some(element => verify(element))) {
     alert('Existem estados repetidos!')
     return false
@@ -91,6 +82,6 @@ function toTuring(states) {
       move: element.slice(13, 14)
     })
   });
-  console.log(actions)
-  validation(actions, states)
+
+  return actions
 }
