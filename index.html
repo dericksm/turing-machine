@@ -8,11 +8,23 @@
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-
+  <script src="./handlebars.runtime-v4.0.11.js"></script>
   <title>Turing Machine</title>
 </head>
 
 <body>
+  <script>
+    var title = 'iury'
+    var body = 'piva'
+    </script>
+    <script id="entry-template" type="text/x-handlebars-template">
+      <div class="entry">
+        <h1>{{title}}</h1>
+        <div class="body">
+          {{body}}
+        </div>
+      </div>
+    </script>
   <div class="container">
     <div class="text-center">
       <h1 id="turing" class="display-1"> Turing Machine</h1>
@@ -92,7 +104,6 @@
   </div>
   <script src='https://ajaxorg.github.io/ace-builds/src-min-noconflict/ace.js'></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
   <script src="script.js"></script>
 
 </body>

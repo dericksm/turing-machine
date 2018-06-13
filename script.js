@@ -9,6 +9,7 @@ function validate() {
     $('#message-success').fadeIn('slow', function () {
       $('#message-success').delay(1000).fadeOut();
     })
+    $('#btn-state').val
     toTuring(statesArray)
   } else {
     $('#message-error').fadeIn('slow', function () {
