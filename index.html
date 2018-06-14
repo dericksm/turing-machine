@@ -8,23 +8,10 @@
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-  <script src="./handlebars.runtime-v4.0.11.js"></script>
   <title>Turing Machine</title>
 </head>
 
 <body>
-  <script>
-    var title = 'iury'
-    var body = 'piva'
-    </script>
-    <script id="entry-template" type="text/x-handlebars-template">
-      <div class="entry">
-        <h1>{{title}}</h1>
-        <div class="body">
-          {{body}}
-        </div>
-      </div>
-    </script>
   <div class="container">
     <div class="text-center">
       <h1 id="turing" class="display-1"> Turing Machine</h1>
@@ -79,7 +66,7 @@
 
     <div class="row">
       <div class="col-sm-4">
-        <div style="margin: 10px 0 0 0">
+        <div style="margin: 10px 0 0 0" >
           <label>Estados</label>
           <textarea id="estados" class="form-control rounded-0" rows="10" required></textarea>
           <small class="form-text text-muted">Exemplo: q1,1-> q2,a,D</small>

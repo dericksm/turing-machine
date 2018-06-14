@@ -6,23 +6,42 @@ var cells = null
 var clock = null
 
 function validate() {
-  var error = false
-  var states = $("#estados").val()
+  if ($("#btn-state").val() == "Enviar") {
+    var error = false
+    var states = $("#estados").val()
 
-  var statesArray = states.split('\n')
+    var statesArray = states.split('\n')
 
-  if (states.match(pattern) && validation(statesArray)) {
-    $('#message-success').fadeIn('slow', function () {
-      $('#message-success').delay(1000).fadeOut()
-    })
-    toTuring(statesArray)
+    if (states.match(pattern) && validation(statesArray)) {
+      $('#message-success').fadeIn('slow', function () {
+        $('#message-success').delay(1000).fadeOut()
+      })
+      toTuring(statesArray)
+      changeButtonOnSuccess()
+    } else {
+      $('#message-error').fadeIn('slow', function () {
+        $('#message-error').delay(1000).fadeOut()
+      })
+      debugStates()
+      validate()
+    }
   } else {
-    $('#message-error').fadeIn('slow', function () {
-      $('#message-error').delay(1000).fadeOut()
-    })
-    debugStates()
-    validate()
+    changeButtonOnEdit()
   }
+}
+
+function changeButtonOnSuccess() {
+  $("#btn-state").toggleClass("btn-primary btn-danger")
+  $("#btn-state").val("Editar")
+  $("#estados").prop("disabled", true)
+
+}
+
+function changeButtonOnEdit() {
+  $("#btn-state").toggleClass("btn-danger btn-primary")
+  $("#btn-state").val("Enviar")
+  $("#estados").prop("disabled", false)
+
 }
 
 
@@ -103,7 +122,7 @@ function addEmptyCell() {
 }
 function moveRight() {
   this.currentIndex++
-  if(this.currentIndex >= this.cells.length) {
+  if (this.currentIndex >= this.cells.length) {
     addEmptyCell()
   }
   $("#cel-" + (this.currentIndex - 1)).removeClass("table-success")
@@ -115,8 +134,8 @@ function moveLeft() {
   $("#cel-" + (this.currentIndex)).addClass("table-success")
 }
 function moveHead(direction) {
-  if(direction == '>') moveRight()
-  if(direction == '<') moveLeft()
+  if (direction == '>') moveRight()
+  if (direction == '<') moveLeft()
 }
 function getAction(state, read) {
   return this.actions.find(element => element.state == state && element.read == read)
