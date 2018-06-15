@@ -3,7 +3,8 @@ var currentIndex = 0
 var currentState = 'q_'
 var actions = null
 var cells = null
-var clock = null
+var timeout = null
+var headCellClass = "table-danger"
 
 function validate() {
   if ($("#btn-state").val() == "Enviar") {
@@ -37,13 +38,18 @@ function changeButtonOnSuccess() {
 
 }
 
+function tapeSuccess() {
+  $('#success-tape').fadeIn('slow', function () {
+    $('#success-tape').delay(1000).fadeOut()
+  })
+}
+
 function changeButtonOnEdit() {
   $("#btn-state").toggleClass("btn-danger btn-primary")
   $("#btn-state").val("Enviar")
   $("#estados").prop("disabled", false)
 
 }
-
 
 function getCells() {
   var val = $("#tape").val()
@@ -57,22 +63,23 @@ function tapeElements() {
   var tape = getCells()
   var index = 0
   tape.forEach(cell => {
-    index++
     insertTapeElements("<td id=cel-" + index + ">" + cell + "</td>")
+    index++
   })
+  $("#cel-0").addClass(headCellClass)
   clock()
 }
 
 function insertTapeElements(data) {
   $('#tape-cell').append(data)
-  $("#cel-0").addClass("table-success")
 }
 
 function debugStates() {
-  $('#estados').val(`q_,_ -> q1,_,>\nq1,1 -> q1,1,>\nq1,0 -> q2,1,>\nq2,1 -> q2,1,>\nq2,0 -> q3,1,<\nq3,1 -> q3,0,$`)
+  $('#estados').val(`q_,_ -> q1,_,>\nq1,1 -> q1,1,>\nq1,0 -> q2,1,>\nq2,1 -> q2,1,>\nq2,0 -> q3,0,<\nq3,1 -> q3,0,$`)
   validate()
   $('#tape').val('1,0,1')
   tapeElements()
+
 }
 
 function validation(states) {
@@ -116,22 +123,25 @@ function toTuring(states) {
   })
   return actions
 }
+
 function addEmptyCell() {
   this.cells.push('0')
   insertTapeElements("<td id=cel-" + this.currentIndex + ">0</td>")
 }
+
 function moveRight() {
   this.currentIndex++
-  if (this.currentIndex >= this.cells.length) {
+  if (this.currentIndex === this.cells.length) {
     addEmptyCell()
+    debugger
   }
-  $("#cel-" + (this.currentIndex - 1)).removeClass("table-success")
-  $("#cel-" + this.currentIndex).addClass("table-success")
+  $("#cel-" + (this.currentIndex - 1)).removeClass(headCellClass)
+  $("#cel-" + this.currentIndex).addClass(headCellClass)
 }
 function moveLeft() {
   this.currentIndex--
-  $("#cel-" + (this.currentIndex + 1)).removeClass("table-success")
-  $("#cel-" + (this.currentIndex)).addClass("table-success")
+  $("#cel-" + (this.currentIndex + 1)).removeClass(headCellClass)
+  $("#cel-" + (this.currentIndex)).addClass(headCellClass)
 }
 function moveHead(direction) {
   if (direction == '>') moveRight()
@@ -140,19 +150,35 @@ function moveHead(direction) {
 function getAction(state, read) {
   return this.actions.find(element => element.state == state && element.read == read)
 }
+
+function sucessRead() {  
+  stopClock()
+  $("#cel-" + (this.currentIndex)).toggleClass("table-danger table-success")
+  tapeSuccess()
+}
+
+function rewriteCell(data, index) {
+  $("#cel-" + (index)).html(data)
+}
+
 function writeCell(data, cells, index) {
   cells[index] = data
+  rewriteCell(data, index)
 }
 function readTape() {
   var action = getAction(this.currentState, this.cells[this.currentIndex])
   writeCell(action.write, this.cells, this.currentIndex)
   this.currentState = action.nextState
-  moveHead(action.move)
+  if (action.move == "$") {    
+    sucessRead()    
+  } else {
+    moveHead(action.move)
+  }
 }
 function clock() {
   readTape()
-  this.clock = setTimeout(clock, 1000)
+  this.timeout = setTimeout(clock, 1000)
 }
 function stopClock() {
-  clearTimeout(this.clock)
+  clearTimeout(this.timeout)
 }

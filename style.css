@@ -26,3 +26,11 @@ body {
  font-family: 'Lobster', cursive;
  font-size: 60px;
 }
+
+#rules {
+  margin-top: 10%
+}
+
+#estados {
+  width: 80%
+}
