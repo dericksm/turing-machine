@@ -1,14 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Lobster');
 
-body { 
-  background-color: grey
-  /* background-image: url('teste.jpg');
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-position: center; 
-  background-size:  100% */
-}
-
 #tape-div {
   display: flex;
 }
@@ -25,10 +16,12 @@ body {
 #turing {
  font-family: 'Lobster', cursive;
  font-size: 60px;
+ margin: 2% 0 2% 0
 }
 
 #rules {
   margin-top: 10%
+
 }
 
 #estados {

@@ -26,12 +26,17 @@
           </tr>
         </table>
         <div id="success-tape" class="alert alert-success" style="display: none">
-            <strong>Perfeito!</strong> Fita lida com sucesso
+          <strong>Perfeito!</strong> Fita lida com sucesso
+        </div>
+        
+        <div id="invalid-tape" class="alert alert-danger" style="display: none">
+            <strong>Atenção!</strong> Elemento inválido encontrado na fita
           </div>
+  
 
         <div class="row">
           <div class="col-md-12">
-            <form onsubmit="tapeElements(); return false " id="form-tape" data-toggle="validator">
+            <form onsubmit="tapeElements(); return false" id="form-tape" data-toggle="validator">
               <div class="input-group has-feedback">
                 <input type="text" id="tape" class="form-control" required pattern="^[a-zA-Z0-9 ](,[a-zA-Z0-9 ])*$">
                 <span class="input-group-btn">
@@ -48,7 +53,14 @@
     <!-- fim da row da fita -->
 
     <!-- row do alfabeto -->
-    <label>Alfabeto</label>
+    <div class="row">
+      <div class="col-6">
+        <label>Alfabeto</label>
+      </div>
+      <div class="col-6">
+        <label>Iniciar máquina de Turing:</label>
+      </div>
+    </div>
     <div class="row">
       <div class="col-sm-4">
         <div class="input-group">
@@ -60,16 +72,24 @@
           </div>
         </div>
       </div>
-      <div class="col-sm-2"></div>
-      <div class="col-sm-6">
-        <label>Iniciar máquina de Turing:</label>
-        <button class="btn btn-primary" style="width: 70px">
-          <i class="fa fa-play"></i>
-        </button>
-        <button class="btn btn-primary"  style="width: 70px">
-          <i class="fa fa-pause"></i>
-        </button>
-
+      <div class="col-3 offset-2">
+        <div class="btn-group">
+          <button class="btn btn-primary" id="btn-play" onclick="clock()" style="width: 70px">
+            <i class="fa fa-play"></i>
+          </button>
+          <button class="btn btn-primary" id="btn-pause" onclick="stopClock()" style="width: 70px">
+            <i class="fa fa-pause"></i>
+          </button>
+          <button class="btn btn-primary" id="btn-pause" onclick="resetClock()" style="width: 70px">
+            <i class="fa fa-refresh"></i>
+          </button>
+        </div>
+      </div>
+      <div class="col-3 input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Intervalo (segundos):</span>
+        </div>
+        <input type="number" id="clock-speed" value="2" min="0.5" step="0.5" class="form-control">
       </div>
     </div>
     <!-- fim row do alfabeto -->
@@ -85,17 +105,16 @@
           <textarea id="estados" class="form-control rounded-0" rows="10" required></textarea>
           <small class="form-text text-muted">Exemplo: q1,1-> q2,a,D</small>
           <div>
-            <input onclick="validate()" id="btn-state" type="button" value="Enviar" class="btn btn-primary">
+            <input onclick="send()" id="btn-state" type="button" value="Enviar" class="btn btn-primary">
           </div>
         </div>
         <br>
 
-        <div id="message-success" class="alert alert-success" style="display: none">
+        <div id="message-success" class="alert alert-success" style="display: none; width: 80%">
           <strong>Perfeito!</strong> Enviado com sucesso
         </div>
-
-        <div id="message-error" class="alert alert-danger" style="display: none">
-          <strong>Olha aqui ó!</strong> Respeita essa regex
+       
+        <div id="message-validate" class="alert alert-danger" style="display: none; font-size:80%; width: 80%">
         </div>
 
       </div>
@@ -107,18 +126,22 @@
           <br> Exemplo: q1,1 -> q2,0,>
           <br>
           <br> O
-          <strong>estado inicial é obrigatório</strong>
+          <strong>estado inicial</strong> é obrigatório
+          <br>O <strong>elemento inicial</strong> é obrigatório
           <br> Pelo menos um
           <strong>estado final</strong> deve ser informado
           <br> "q_" - Representa o estado inicial
+          <br> "_" - Representa o elemento inicial
           <br> "$" - Representa um movimento da fita que é
           <strong>final</strong>
-          <br> ">" - representa um movimento para direita
-          <br> "
-          < " - representa um movimento para esquerda <br>
-              "0 " - representa um elemento branco            
+          <br> ">" - Representa um movimento para direita
+          <br> "&LT;" - Representa um movimento para esquerda
+          <br> "0" - Representa um elemento branco            
           </p>
-
+          
+          <p class="small text-justify "><strong>Testes:</strong></p>
+            <button class="btn btn-outline-primary btn-sm " onclick="sumTest() ">Testar Soma</button>            
+            <button class="btn btn-outline-primary btn-sm " onclick="equalsTest() ">Testar A = B</button>
         </div>
 
       </div>
